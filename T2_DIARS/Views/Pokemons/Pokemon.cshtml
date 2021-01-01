@@ -1,0 +1,51 @@
+﻿@{ 
+    var pokemones = ((List<Pokemons>)Model); 
+}
+<h1>LISTA DE POKEMONES</h1>
+
+
+<a href="/pokemons/create" class="btn btn-dark">Crear Pokemón</a>
+
+<form class="form-inline">
+    <input class="form-control mr-sm-2 my-sm-0" type="search" placeholder="Buscar" name="search" value="@ViewBag.Buscar">
+    <button class="btn btn-outline-success my-2" type="submit">Buscar</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in pokemones)
+        {
+            <tr>
+               <td>
+                    <img src="@item.Imagen" width="100" alt="Alternate Text" />
+                </td>
+                <td>@item.Nombre</td>
+                <td>@item.Tipo.Nombre</td>
+    
+                <td>
+                    @if (User.Claims.FirstOrDefault() != null)
+                    {
+
+                        <a href="/pokemons/edit?id=@item.Id">Capturar</a>
+                        <a href ="/pokemons/delete?id=@item.Id" > Eliminar </a>
+                    }
+                    else
+                    {
+                        <a href="/user/login">Login</a>
+
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
